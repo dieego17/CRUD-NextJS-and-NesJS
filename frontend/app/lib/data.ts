@@ -7,19 +7,20 @@ const apiUrl = process.env.NEXT_PUBLIC_API;
 
 export async function getAllUsers() {
 
-    const response = await fetch(`http://localhost:3001/users/`);
+    console.log(apiUrl);
+    const response = await fetch(apiUrl);
     const data = await response.json();
     return data;
 }
 
 export async function getOneUser(id : string) {
-    const response = await fetch(`http://localhost:3001/users/${id}`);
+    const response = await fetch(apiUrl + id);
     const data = await response.json();
     return data;
 }
 
 export async function getUserByName(name : string) {
-    const response = await fetch(`http://localhost:3001/users/${name}`);
+    const response = await fetch(apiUrl +`?nombre=${name}`);
     const data = await response.json();
     return data;
 }
@@ -29,7 +30,7 @@ export async function createUser(newUser : nuevoUser) {
     // Asignar un ID aleatorio al nuevo usuario
     newUser.id = uuidv4();
     
-    const response = await fetch(`http://localhost:3001/users/`, {
+    const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -49,7 +50,7 @@ export async function createUser(newUser : nuevoUser) {
 }
 
 export async function deleteUser(id : string) {
-    const response = await fetch(`http://localhost:3001/users/${id}`, {
+    const response = await fetch(apiUrl + id, {
         method: 'DELETE',
     });
 
@@ -64,7 +65,7 @@ export async function deleteUser(id : string) {
 }
 
 export async function updateUserFetch(id : string, updatedUser : Omit<modifyUser, 'id'>) {
-    const response = await fetch(`http://localhost:3001/users/${id}`, {
+    const response = await fetch(apiUrl + id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

@@ -1,7 +1,6 @@
 'use client'
 
 import { ChangeEvent, FormEvent, use, useState } from "react";
-import Link from "next/link";
 import { useUser } from "../context/useUser";
 
 export default function UserForm() {

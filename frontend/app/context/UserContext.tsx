@@ -6,19 +6,16 @@ interface UserContextValue {
     users: Users[];
     crearUser: (user: nuevoUser) => Promise<void>;
     borrarUser: (id: string) => Promise<void>;
-    oneUser: (id: string) => Promise<void>;
 }
 
 export const UserContext = createContext<UserContextValue>({
     users: [],
     crearUser: async () => {},
     borrarUser: async () => {},
-    oneUser: async () => {}
 });
 
 interface Props{
     children: React.ReactNode;
-
 }
 
 export const UserProvider: React.FC<Props> = ({ children }) => {
@@ -46,13 +43,8 @@ export const UserProvider: React.FC<Props> = ({ children }) => {
         setUsers(users.filter((user) => user.id !== id));
     }
 
-    const oneUser = async (id: string) => {
-        const res = await getOneUser(id);
-        console.log(res);
-    }
-
     return(
-        <UserContext.Provider value={{ users, crearUser, borrarUser, oneUser }}>
+        <UserContext.Provider value={{ users, crearUser, borrarUser }}>
             {children}
         </UserContext.Provider>
     )
