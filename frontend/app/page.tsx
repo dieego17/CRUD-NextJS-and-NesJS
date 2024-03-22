@@ -3,6 +3,7 @@
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import UserForm from "./components/UserForm";
 import UserList from "./components/UserList";
+import { UserProvider } from "./context/UserContext";
 
 export default function Home() {
 
@@ -32,23 +33,26 @@ export default function Home() {
 
   return (
     <div>
-      <section className="flex h-20 rounded bg-blue-300 p-5 top-0 w-full">
-          {/* Crear un campo de búsqueda controlado con el valor del parámetro de búsqueda 'query' */}
-          <input 
-          defaultValue={searchParams.get('query')?.toString()} 
-          onChange={(e) => handleSearch(e.target.value)} 
-          className="h-10 flex-1 px-2 p-2 rounded-xl text-black" 
-          placeholder="Buscar usuarios..." 
-          type="query"  />
-      </section>
-      <section className="flex justify-between items-baseline">
-        <article className="w-2/4 p-4 m-2 rounded-lg">
-          <UserList  /> 
-        </article>
-        <article className="w-2/4 p-4 m-2  rounded-lg">
-          <UserForm />
-        </article>
-      </section>
+      <UserProvider>
+        {/* Crear un campo de búsqueda controlado con el valor del parámetro de búsqueda 'query' */}
+        <section className="flex h-20 rounded bg-blue-300 p-5 top-0 w-full">
+            
+            <input 
+            defaultValue={searchParams.get('query')?.toString()} 
+            onChange={(e) => handleSearch(e.target.value)} 
+            className="h-10 flex-1 px-2 p-2 rounded-xl text-black" 
+            placeholder="Buscar usuarios..." 
+            type="query"  />
+        </section>
+        <section className="flex justify-between items-baseline">
+            <article className="w-2/4 p-4 m-2 rounded-lg">
+              <UserList  /> 
+            </article>
+            <article className="w-2/4 p-4 m-2  rounded-lg">
+              <UserForm />
+            </article>
+        </section>
+      </UserProvider>
     </div>
     
   );

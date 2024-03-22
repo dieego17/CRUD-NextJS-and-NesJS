@@ -1,27 +1,27 @@
 'use client'
 
-import { ChangeEvent, FormEvent, useState } from "react";
-import { createUser } from "../lib/data";
+import { ChangeEvent, FormEvent, use, useState } from "react";
 import Link from "next/link";
+import { useUser } from "../context/useUser";
 
 export default function UserForm() {
 
-    const [usuarios, setUsuarios] = useState({
+    const [user, setUsuarios] = useState({
         id: "",
         nombre: "",
         apellido: "",
         email: ""
     })
 
+    const {crearUser} = useUser();
+
     const handleChange = (event : ChangeEvent<HTMLInputElement>) =>{
-        setUsuarios({...usuarios, [event.target.name] : event.target.value})
+        setUsuarios({...user, [event.target.name] : event.target.value})
     }
 
     const handleSubmit = async (e : FormEvent<HTMLFormElement>) =>{
         e.preventDefault();
-        const res = await createUser(usuarios);
-        location.reload();
-        console.log(res)
+        crearUser(user)
     }
 
     return(

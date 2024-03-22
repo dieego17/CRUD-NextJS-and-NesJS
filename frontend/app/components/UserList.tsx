@@ -1,8 +1,5 @@
 'use client'
 
-import { getAllUsers } from "../lib/data";
-import { Users } from "../lib/definitions";
-import { useEffect, useState } from "react";
 import UserCard from "./UserCard";
 
 export default function UserList( {

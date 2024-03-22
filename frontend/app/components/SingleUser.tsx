@@ -2,6 +2,7 @@ import React, { use } from 'react';
 import { Users, modifyUser } from '../lib/definitions';
 import { deleteUser } from '../lib/data';
 import Link from 'next/link';
+import { useUser } from '../context/useUser';
 
 
 interface UserCardProps {
@@ -10,9 +11,10 @@ interface UserCardProps {
 
 export default function SingleUser({ user }: UserCardProps) {
 
-    const borrarUser = async (id : string) =>{
-        const res = await deleteUser(id);
-        location.reload();
+    const {borrarUser} = useUser();
+
+    const deleteUser = async (id : string) =>{
+        const res = await borrarUser(id);
     }
 
     return (
@@ -20,7 +22,11 @@ export default function SingleUser({ user }: UserCardProps) {
             <h2>{user.nombre} {user.apellido}</h2>
             <h2 className="p-6">{user.email}</h2>
             <div className="m-2 p-2 flex items-center justify-between">
-                <button onClick={() =>{borrarUser(user.id)}} className="border rounded m-1 p-1 text-white hover:bg-red-300 bg-red-500" type="submit">Eliminar</button>
+                <button onClick={() =>{
+                    if(confirm("¿Estás seguro de que deseas eliminar este usuario?")){
+                        deleteUser(user.id)
+                    }
+                    }} className="border rounded m-1 p-1 text-white hover:bg-red-300 bg-red-500" type="submit">Eliminar</button>
                 {/* <button  onClick={() =>{actualizarUser(user.id, user)}}  type="submit">Editar</button> */}
                 <Link className="border rounded m-1 p-1 bg-orange-500 hover:bg-orange-300 text-white" href={`/updateUser/?id=${user.id}`}>
                     Editar
